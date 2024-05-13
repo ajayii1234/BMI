@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI Calculator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  h2 {
+    margin-bottom: 20px;
+  }
+  .input-group {
+    margin-bottom: 10px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  input[type="number"] {
+    padding: 8px;
+    font-size: 16px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  #result {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<h2>BMI Calculator</h2>
+
+<div class="input-group">
+  <label for="weight">Weight (kg):</label>
+  <input type="number" id="weight" min="0" step="0.01">
+</div>
+<div class="input-group">
+  <label for="height">Height (cm):</label>
+  <input type="number" id="height" min="0" step="0.01">
+</div>
+<button id="calculateBtn">Calculate BMI</button>
+
+<div id="result"></div>
+
+<script>
+  const calculateBtn = document.getElementById('calculateBtn');
+  const resultDiv = document.getElementById('result');
+
+  function calculateBMI() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value) / 100; // Convert height to meters
+
+    if (!isNaN(weight) && !isNaN(height) && height > 0) {
+      const bmi = weight / (height * height);
+      const bmiCategory = getBMICategory(bmi);
+      resultDiv.textContent = `Your BMI: ${bmi.toFixed(2)} (${bmiCategory})`;
+    } else {
+      resultDiv.textContent = 'Please enter valid weight and height values.';
+    }
+  }
+
+  function getBMICategory(bmi) {
+    if (bmi < 18.5) {
+      return 'Underweight';
+    } else if (bmi >= 18.5 && bmi < 25) {
+      return 'Normal weight';
+    } else if (bmi >= 25 && bmi < 30) {
+      return 'Overweight';
+    } else {
+      return 'Obese';
+    }
+  }
+
+  calculateBtn.addEventListener('click', calculateBMI);
+</script>
+
+</body>
+</html>
